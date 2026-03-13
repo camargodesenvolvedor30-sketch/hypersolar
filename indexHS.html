@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HyperSolar | Orçamento Inteligente</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .solar-gradient { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans text-gray-800">
+
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-sun text-yellow-500 text-3xl"></i>
+                <span class="text-2xl font-bold tracking-tight text-gray-900">HYPER<span class="text-yellow-600">SOLAR</span></span>
+            </div>
+            <nav class="hidden md:flex space-x-8 font-medium">
+                <a href="#" class="hover:text-yellow-600 transition">Início</a>
+                <a href="#simulador" class="hover:text-yellow-600 transition">Simulador</a>
+                <a href="https://wa.me/seunumeroaqui" class="bg-yellow-500 text-white px-4 py-2 rounded-lg hover:bg-yellow-600 transition">Contato WhatsApp</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="solar-gradient py-20 text-white">
+        <div class="container mx-auto px-6 text-center">
+            <h1 class="text-4xl md:text-6xl font-extrabold mb-4">Energia Infinita, Economia Real.</h1>
+            <p class="text-xl mb-8 opacity-90">Reduza sua conta de luz em até 95% com a tecnologia HyperSolar.</p>
+            <a href="#simulador" class="bg-white text-yellow-700 font-bold py-3 px-8 rounded-full shadow-lg hover:bg-gray-100 transition">Simular Agora</a>
+        </div>
+    </section>
+
+    <section id="simulador" class="py-16">
+        <div class="container mx-auto px-6">
+            <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
+                <div class="p-8 md:p-12">
+                    <h2 class="text-3xl font-bold mb-6 text-center text-gray-800">Simulador de Investimento</h2>
+                    
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div class="space-y-6">
+                            <div>
+                                <label class="block text-sm font-semibold mb-2">Consumo Mensal Médio (kWh)</label>
+                                <input type="number" id="consumo" placeholder="Ex: 500" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 outline-none transition">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold mb-2">Valor Atual da Conta (R$)</label>
+                                <input type="number" id="conta" placeholder="Ex: 450" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 outline-none transition">
+                            </div>
+                            <button onclick="calcularOrcamento()" class="w-full bg-gray-900 text-white font-bold py-4 rounded-lg hover:bg-gray-800 transition uppercase tracking-widest">
+                                Calcular Estimativa
+                            </button>
+                        </div>
+
+                        <div id="resultado" class="bg-gray-50 p-6 rounded-xl border-2 border-dashed border-gray-200 flex flex-col justify-center items-center">
+                            <p class="text-gray-500 italic text-center">Insira os dados para visualizar a proposta técnica simplificada.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-gray-900 text-gray-400 py-12">
+        <div class="container mx-auto px-6 text-center">
+            <p class="mb-4">&copy; 2026 HyperSolar - Lages/SC. Todos os direitos reservados.</p>
+            <div class="flex justify-center space-x-6">
+                <a href="#" class="hover:text-white"><i class="fab fa-instagram text-2xl"></i></a>
+                <a href="#" class="hover:text-white"><i class="fab fa-linkedin text-2xl"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function calcularOrcamento() {
+            const consumo = parseFloat(document.getElementById('consumo').value);
+            const conta = parseFloat(document.getElementById('conta').value);
+
+            if (!consumo || !conta) {
+                alert("Por favor, preencha os campos de consumo e valor da conta.");
+                return;
+            }
+
+            // Lógica simplificada de dimensionamento (baseada em médias de SC)
+            const horasSolPleno = 4.2; // Média para Santa Catarina
+            const eficienciaSistema = 0.80;
+            const potenciaPainel = 550; // Watts
+
+            const potenciaNecessariaKWp = (consumo / 30) / (horasSolPleno * eficienciaSistema);
+            const qtdPaineis = Math.ceil((potenciaNecessariaKWp * 1000) / potenciaPainel);
+            const investimentoEstimado = potenciaNecessariaKWp * 3800; // Média de R$ 3,8k por kWp instalado
+            const economiaAnual = (conta * 12) * 0.90;
+
+            const resultadoDiv = document.getElementById('resultado');
+            resultadoDiv.innerHTML = `
+                <div class="w-full animate-fade-in">
+                    <h3 class="text-yellow-600 font-bold text-lg mb-4 underline">Sua Proposta HyperSolar:</h3>
+                    <div class="space-y-4">
+                        <div class="flex justify-between border-b pb-2">
+                            <span>Painéis (550W):</span>
+                            <span class="font-bold text-gray-900">${qtdPaineis} unidades</span>
+                        </div>
+                        <div class="flex justify-between border-b pb-2">
+                            <span>Potência Total:</span>
+                            <span class="font-bold text-gray-900">${potenciaNecessariaKWp.toFixed(2)} kWp</span>
+                        </div>
+                        <div class="flex justify-between border-b pb-2">
+                            <span>Investimento Est.:</span>
+                            <span class="font-bold text-green-600">R$ ${investimentoEstimado.toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span>
+                        </div>
+                        <div class="mt-6 p-4 bg-yellow-100 rounded-lg text-center">
+                            <p class="text-sm text-yellow-800">Economia estimada de</p>
+                            <p class="text-2xl font-bold text-yellow-900">R$ ${economiaAnual.toLocaleString('pt-BR', {maximumFractionDigits: 0})} / ano</p>
+                        </div>
+                        <p class="text-[10px] text-gray-400 mt-4">*Valores estimados baseados em médias regionais. Sujeito a visita técnica.</p>
+                    </div>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
